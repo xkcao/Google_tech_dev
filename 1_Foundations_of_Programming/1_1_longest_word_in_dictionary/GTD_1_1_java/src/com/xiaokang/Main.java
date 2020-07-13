@@ -1,5 +1,7 @@
 package com.xiaokang;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Main {
@@ -13,13 +15,15 @@ public class Main {
     {
         String matchedWord = "";
 
-        int length=0;
+        Collections.sort(dictionary, Comparator.comparingInt(String::length));
+        Collections.reverse(dictionary);
+
         for(String word:dictionary)
         {
-            if (isSubsequence(targetString,word) && word.length()>length)
+            if (isSubsequence(targetString,word) )
             {
-                length = word.length();
                 matchedWord = word;
+                break;
             }
         }
 
