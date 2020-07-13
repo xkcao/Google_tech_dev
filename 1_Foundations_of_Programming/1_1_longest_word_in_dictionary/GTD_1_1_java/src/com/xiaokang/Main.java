@@ -1,23 +1,8 @@
 package com.xiaokang;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-
-    public static void main(String[] args) {
-        String targetString = "abppplee";
-
-        List<String> dictionary = new ArrayList<String>();
-        dictionary.add("able");
-        dictionary.add("ale");
-        dictionary.add("apple");
-        dictionary.add("bale");
-        dictionary.add("kangaroo");
-
-        String matchedWord =  longestWord(targetString,dictionary);
-        System.out.println("The matched word is: " + matchedWord);
-    }
 
     /**
      * @param targetString
@@ -41,6 +26,11 @@ public class Main {
         return matchedWord;
     }
 
+    /**
+     * @param targetString
+     * @param testString
+     * @return
+     */
     public static boolean isSubsequence(String targetString, String testString)
     {
         boolean isSubsequence = false;
