@@ -1,6 +1,8 @@
 package com.xiaokang;
 
 
+import java.util.Arrays;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -13,8 +15,7 @@ public class Main {
         student[2] = false;
         student[3] = true;
 
-        for(int i : ages) {
-            System.out.println(i);
-        }
+        System.out.println(Arrays.toString(ages));
+        System.out.println(Arrays.toString(student));
     }
 }
