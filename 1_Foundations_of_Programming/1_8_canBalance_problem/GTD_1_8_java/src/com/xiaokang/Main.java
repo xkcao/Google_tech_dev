@@ -2,8 +2,7 @@ package com.xiaokang;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.*;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class Main {
 
@@ -29,8 +28,8 @@ public class Main {
             endSum.put(i,sum);
         }
 
-        for(int i=0;i<nums.length-1;i++){
-            if(frontSum.get(i) == endSum.get(i+1)){
+        for(int i=0;i<nums.length-1;i++) {
+            if (frontSum.get(i).equals(endSum.get(i + 1))) {
                 result = true;
                 break;
             }
@@ -44,9 +43,9 @@ public class Main {
         int[] nums2 = {2, 1, 1, 2, 1};
         int[] nums3 = {10,10};
 
-        assertEquals(true, canBalance(nums1));
-        assertEquals(false, canBalance(nums2));
-        assertEquals(true, canBalance(nums3));
+        assertTrue(canBalance(nums1));
+        assertFalse(canBalance(nums2));
+        assertTrue(canBalance(nums3));
     }
 
 }
