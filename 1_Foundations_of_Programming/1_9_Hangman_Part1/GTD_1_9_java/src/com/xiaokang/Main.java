@@ -2,8 +2,19 @@ package com.xiaokang;
 
 public class Main {
 
+
     public static void main(String[] args) {
-	// write your code here
-        System.out.println("hello world");
+
+        Hangman hangman = new Hangman();
+
+        hangman.initialize();
+
+        while(!hangman.gameEnd){
+            hangman.showStatus();
+            hangman.userGuess();
+            hangman.showAnswer();
+        }
+
+        hangman.showEndResult();
     }
 }
