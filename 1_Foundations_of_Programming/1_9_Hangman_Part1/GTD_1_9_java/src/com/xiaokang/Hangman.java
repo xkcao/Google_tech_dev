@@ -12,7 +12,8 @@ public class Hangman {
     boolean initialized;
     final int MAX_GUESS_NUMBER = 8;
     char userLetter;
-    HashSet<Character> userCorrectLetters;
+    final HashSet<Character> userCorrectLetters;
+    int correctLetterNumber;
 
     public Hangman() {
         this.remainingGuess = MAX_GUESS_NUMBER;
@@ -21,7 +22,8 @@ public class Hangman {
         this.gameEnd = false;
         this.userWon = false;
         this.initialized = false;
-        userCorrectLetters = new HashSet<Character>();
+        userCorrectLetters = new HashSet<>();
+        correctLetterNumber = 0;
     }
 
     public void initialize(){
@@ -29,17 +31,15 @@ public class Hangman {
 
         HangmanLexicon hangmanLexicon = new HangmanLexicon();
 
-        /**
-         * generate a random integer range from 0 to [hangmanLexicon.getWordCount()-1]
+        /*
+          generate a random integer range from 0 to [hangmanLexicon.getWordCount()-1]
          */
-        int wordIndex = (int)(Math.random() * (hangmanLexicon.getWordCount() - 0 ) + 0);
+        int wordIndex = (int)(Math.random() * hangmanLexicon.getWordCount() );
         word = hangmanLexicon.getWord(wordIndex);
 
         System.out.println("word: "+word);
 
-        for(int i =0;i<word.length();i++){
-            currentWord += "-";
-        }
+        currentWord = "-".repeat(word.length());
 
         initialized = true;
     }
@@ -56,7 +56,7 @@ public class Hangman {
         Scanner s = new Scanner(System.in);
 
         boolean guessOK = false;
-        String userEntry="";
+        String userEntry;
 
         while(!guessOK){
             System.out.print("Your guess: ");
@@ -81,24 +81,25 @@ public class Hangman {
         if(!initialized) initialize();
         boolean correctGuess = false;
         String previousWord = currentWord;
-        currentWord = "";
+        StringBuilder str = new StringBuilder();
 
         for (int i=0;i<word.length();i++){
             if(previousWord.charAt(i)!='-'){
-                currentWord += previousWord.charAt(i);
+                str.append(previousWord.charAt(i));
             }
             else if(Character.toUpperCase(userLetter) == Character.toUpperCase(word.charAt(i))){
-                currentWord += Character.toUpperCase(userLetter);
+                str.append(Character.toUpperCase(userLetter));
+                correctLetterNumber ++;
 
-                if(!userCorrectLetters.contains(Character.toUpperCase(userLetter))){
-                    userCorrectLetters.add(Character.toUpperCase(userLetter));
-                    correctGuess = true;
-                }
+                userCorrectLetters.add(Character.toUpperCase(userLetter));
+                correctGuess = true;
             }
             else{
-                currentWord += "-";
+                str.append('-');
             }
         }
+
+        currentWord = str.toString();
 
         if(correctGuess){
             System.out.println("That guess is correct");
@@ -127,15 +128,6 @@ public class Hangman {
     }
 
     public boolean isUserWon(){
-        boolean won = true;
-
-        for(int i=0;i<word.length();i++){
-            if(currentWord.charAt(i)=='-'){
-                won = false;
-                break;
-            }
-        }
-
-        return won;
+        return (correctLetterNumber == word.length());
     }
 }
