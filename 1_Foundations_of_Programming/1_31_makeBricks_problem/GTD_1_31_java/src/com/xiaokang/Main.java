@@ -7,21 +7,13 @@ public class Main {
     }
 
     public boolean makeBricks(int small, int big, int goal) {
-        int numSmall = small;
-        int numBig = big;
-        int sum = small + big*5;
+        //fail #1 -- not enough bricks
+        if (goal > small + big*5) return false;
 
-        while(sum>goal && (numSmall>0 || numBig>0)){
-            if((numBig>0 && sum-5>=goal) || numSmall==0){
-                numBig--;
-            }else if(numSmall>0){
-                numSmall--;
-            }
+        // fail #2 -- not enough small bricks
+        if (goal % 5 > small) return false;
 
-            sum = numSmall + numBig*5;
-        }
-
-        return (sum==goal);
+        return true;
     }
 
 }
