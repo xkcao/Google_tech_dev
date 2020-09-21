@@ -25,7 +25,7 @@ public class DecompressionTest {
 
     @Test
     public void decompressStringTest3() {
-        String input = "2[3[a]b";
+        String input = "2[3[a]b]";
         String expectedOutput = "aaabaaab";
 
         assertEquals(expectedOutput,Decompression.decompressString(input));
