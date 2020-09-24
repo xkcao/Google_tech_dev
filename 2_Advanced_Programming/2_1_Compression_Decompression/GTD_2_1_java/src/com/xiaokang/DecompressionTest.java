@@ -30,4 +30,20 @@ public class DecompressionTest {
 
         assertEquals(expectedOutput,Decompression.decompressString(input));
     }
+
+    @Test
+    public void decompressStringTest4() {
+        String input = "a[]b";
+        String expectedOutput = "ab";
+
+        assertEquals(expectedOutput,Decompression.decompressString(input));
+    }
+
+    @Test
+    public void decompressStringTest5() {
+        String input = "0[abc]";
+        String expectedOutput = "";
+
+        assertEquals(expectedOutput,Decompression.decompressString(input));
+    }
 }
