@@ -6,20 +6,44 @@ import java.text.DecimalFormat;
 import java.util.Scanner;
 
 /*
- * This is code I wrote with students in class to demonstrate how to read from the movie review file.
- * It searches each review for the queried word and just prints out the score of that review along 
- * with its text to ensure that we can read the two values and use the .contains() method properly.
+ * @author: Xiaokang CAO
  */
-public class CS1ProjectStarterCode 
+public class CS1ProjectStarterCode
 {
-	public static void main(String[] args) throws FileNotFoundException 
+	public static void main(String[] args) throws FileNotFoundException
 	{
-		computeAverageScore("good");
-		computeAverageScore("fantastic");
-		computeAverageScore("extraordinary");
-		computeAverageScore("bad");
-		computeAverageScore("worst");
-		computeAverageScore("disgusting");
+		Scanner keyboard = new Scanner(System.in);
+		String filePath;
+		double score;
+		double averageScore=0d;
+		int numWords = 0;
+
+		System.out.print("Enter the name of the file with words you want to find average score for: ");
+		filePath = keyboard.nextLine();
+
+		File wordListFile = new File(filePath);
+		Scanner wordListScanner = new Scanner(wordListFile);
+
+		while(wordListScanner.hasNext()){
+			String word = wordListScanner.nextLine();
+			score = computeAverageScore(word);
+
+			averageScore += score;
+			numWords += 1;
+		}
+
+		if(numWords>0){
+			averageScore = averageScore/numWords;
+			System.out.println("The average score of the words in " + filePath + " is " +  decimalCustomFormat("##.##", averageScore));
+
+			if(averageScore>=2.01){
+				System.out.println("The overall sentiment of " + filePath + " is positive");
+			}else{
+				System.out.println("The overall sentiment of " + filePath + " is negative");
+			}
+		}else{
+			System.out.println("No words found in "+filePath);
+		}
 	}
 
 	static double computeAverageScore(String word) throws  FileNotFoundException
@@ -50,8 +74,8 @@ public class CS1ProjectStarterCode
 
 		if (numberAppearance>0){
 			averageScore = (double) totalScore/numberAppearance;
-			System.out.println("- " + word + " appears " + numberAppearance + " times.");
-			System.out.println("\t The average score is: " + decimalCustomFormat("##.##",averageScore));
+			//System.out.println("- " + word + " appears " + numberAppearance + " times.");
+			//System.out.println("\t The average score is: " + decimalCustomFormat("##.##",averageScore));
 		}else {
 			System.out.println("This word does not appear.");
 		}
