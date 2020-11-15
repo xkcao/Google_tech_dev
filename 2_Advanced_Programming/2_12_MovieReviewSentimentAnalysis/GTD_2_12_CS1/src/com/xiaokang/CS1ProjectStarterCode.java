@@ -12,9 +12,13 @@ public class CS1ProjectStarterCode
 {
 	public static void main(String[] args) throws FileNotFoundException
 	{
+		scoreWordList();
+	}
+
+	static void scoreWordList() throws  FileNotFoundException{
 		Scanner keyboard = new Scanner(System.in);
-		String filePath;
-		double score;
+		String filePath, mostPositiveWord="", mostNegativeWord="";
+		double score, mostPositiveScore=0, mostNegativeScore=99d;
 		double averageScore=0d;
 		int numWords = 0;
 
@@ -27,6 +31,15 @@ public class CS1ProjectStarterCode
 		while(wordListScanner.hasNext()){
 			String word = wordListScanner.nextLine();
 			score = computeAverageScore(word);
+
+			if (score>mostPositiveScore) {
+				mostPositiveWord = word;
+				mostPositiveScore = score;
+			}
+			if(score<mostNegativeScore){
+				mostNegativeScore = score;
+				mostNegativeWord = word;
+			}
 
 			averageScore += score;
 			numWords += 1;
@@ -41,6 +54,9 @@ public class CS1ProjectStarterCode
 			}else{
 				System.out.println("The overall sentiment of " + filePath + " is negative");
 			}
+
+			System.out.println("The most positive word, with a score of " + decimalCustomFormat("##.##",mostPositiveScore) + " is " + mostPositiveWord);
+			System.out.println("The most negative word, with a score of " + decimalCustomFormat("##.##",mostNegativeScore) + " is " + mostNegativeWord);
 		}else{
 			System.out.println("No words found in "+filePath);
 		}
