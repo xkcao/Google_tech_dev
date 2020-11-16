@@ -3,24 +3,27 @@ package com.xiaokang;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
+import java.util.Hashtable;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.*;
 
 /*
  * @author: Xiaokang CAO
  */
 public class CS1ProjectStarterCode
 {
-	public static void main(String[] args) throws FileNotFoundException
-	{
+	public static void main(String[] args) throws FileNotFoundException, ExecutionException, InterruptedException {
 		scoreWordList();
 	}
 
-	static void scoreWordList() throws  FileNotFoundException{
+	static void scoreWordList() throws FileNotFoundException, ExecutionException, InterruptedException {
 		Scanner keyboard = new Scanner(System.in);
 		String filePath, mostPositiveWord="", mostNegativeWord="";
-		double score, mostPositiveScore=0, mostNegativeScore=99d;
+		double mostPositiveScore=0, mostNegativeScore=99d;
 		double averageScore=0d;
 		int numWords = 0;
+		Hashtable<String, Future<Double>> wordScoreMap = new Hashtable<>();
 
 		System.out.print("Enter the name of the file with words you want to find average score for: ");
 		filePath = keyboard.nextLine();
@@ -28,17 +31,27 @@ public class CS1ProjectStarterCode
 		File wordListFile = new File(filePath);
 		Scanner wordListScanner = new Scanner(wordListFile);
 
+		ExecutorService executorService = Executors.newFixedThreadPool(8);
 		while(wordListScanner.hasNext()){
 			String word = wordListScanner.nextLine();
-			score = computeAverageScore(word);
 
+			Future<Double> future = executorService.submit(() -> computeAverageScore(word));
+
+			wordScoreMap.put(word,future);
+		}
+
+		executorService.shutdown();
+		executorService.awaitTermination(100, TimeUnit.SECONDS);
+
+		for(Map.Entry<String, Future<Double>> entry : wordScoreMap.entrySet()){
+			double score = entry.getValue().get();
 			if (score>mostPositiveScore) {
-				mostPositiveWord = word;
+				mostPositiveWord = entry.getKey();
 				mostPositiveScore = score;
 			}
 			if(score<mostNegativeScore){
+				mostNegativeWord = entry.getKey();
 				mostNegativeScore = score;
-				mostNegativeWord = word;
 			}
 
 			averageScore += score;
