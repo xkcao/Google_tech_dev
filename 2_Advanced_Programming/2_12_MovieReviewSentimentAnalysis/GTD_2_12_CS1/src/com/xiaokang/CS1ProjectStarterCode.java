@@ -12,7 +12,15 @@ import java.util.concurrent.*;
 public class CS1ProjectStarterCode
 {
 	public static void main(String[] args) throws IOException, ExecutionException, InterruptedException {
-		scoreWordList();
+		Scanner keyboard = new Scanner(System.in);
+		int option=0;
+
+		while(option !=5){
+			menu();
+			option = keyboard.nextInt();
+
+			if (option>=1 && option<=4) scoreWordList();
+		}
 	}
 
 	/**
@@ -162,5 +170,15 @@ public class CS1ProjectStarterCode
 		DecimalFormat myFormatter = new DecimalFormat(pattern);
 		return myFormatter.format(value);
 		//System.out.println(value + "  " + pattern + "  " + output);
+	}
+
+	static void menu(){
+		System.out.println("\nWhat would you like to do?");
+		System.out.println("1. Get the score of a word");
+		System.out.println("2. Get the average score of words in a file (one word per line)");
+		System.out.println("3. Find the highest/lowest scoring words in a file");
+		System.out.println("4. Sort the words in a file into positive.txt and negative.txt");
+		System.out.println("5: Exit the program");
+		System.out.print("Enter a number 1-5: ");
 	}
 }
