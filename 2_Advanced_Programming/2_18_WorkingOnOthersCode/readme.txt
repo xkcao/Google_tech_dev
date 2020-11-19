@@ -1,0 +1,1 @@
+https://softwareengineering.stackexchange.com/questions/149762/working-on-someone-elses-code
