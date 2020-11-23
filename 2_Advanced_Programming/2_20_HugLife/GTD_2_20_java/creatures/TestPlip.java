@@ -59,6 +59,6 @@ public class TestPlip {
     }
 
     public static void main(String[] args) {
-        System.exit(jh61b.junit.textui.runClasses(TestPlip.class));
+        //System.exit(jh61b.junit.textui.runClasses(TestPlip.class));
     }
 } 

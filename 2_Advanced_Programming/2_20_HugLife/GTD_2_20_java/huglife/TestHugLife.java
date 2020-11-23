@@ -24,6 +24,6 @@ public class TestHugLife {
     }
 
     public static void main(String[] args) {
-        jh61b.junit.textui.runClasses(TestHugLife.class);   
+        //jh61b.junit.textui.runClasses(TestHugLife.class);
     }
 } 
