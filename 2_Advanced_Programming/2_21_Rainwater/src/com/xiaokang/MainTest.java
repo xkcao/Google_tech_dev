@@ -22,5 +22,13 @@ public class MainTest {
         int[] heightBar3 = {2,1,2};
         int expectedResult3 = 1;
         assertEquals( expectedResult3, rainWaterVolume(heightBar3));
+
+        int[] heightBar4 = {1,2,3,4,5,4,3,2,1};
+        int expectedResult4 = 0;
+        assertEquals( expectedResult4, rainWaterVolume(heightBar4));
+
+        int[] heightBar5 = {4,3,2,1,2,3,4};
+        int expectedResult5 = 9;
+        assertEquals( expectedResult5, rainWaterVolume(heightBar5));
     }
 }

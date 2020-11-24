@@ -4,8 +4,6 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 
-import java.util.ArrayList;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -19,70 +17,50 @@ public class Main {
     }
 
     static int rainWaterVolume(int[] heightBar){
-        int leftIndex = smallestIndexMax(heightBar,0,heightBar.length-1);
-        int rightIndex = leftIndex;
+        int maxIndex = indexOfLargestValue(heightBar);
+        int leftIndex=0;
+        int leftRunningMax=heightBar[leftIndex];
+        int rightIndex = heightBar.length-1;
+        int rightRunningMax=heightBar[rightIndex];
         int leftVolume=0;
         int rightVolume=0;
 
-        while(leftIndex>0){
-            int secondLeftIndex = smallestIndexMax(heightBar,0,leftIndex-1);
-            for(int i=secondLeftIndex+1;i<leftIndex;i++){
-                leftVolume += heightBar[secondLeftIndex] - heightBar[i];
+        while(leftIndex<maxIndex){
+            if(heightBar[leftIndex]>leftRunningMax){
+                leftRunningMax = heightBar[leftIndex];
+            }else{
+                leftVolume += leftRunningMax - heightBar[leftIndex];
             }
 
-            leftIndex = secondLeftIndex;
+            leftIndex++;
         }
 
-        while ((rightIndex<heightBar.length-1)){
-            int secondRightIndex = largestIndexMax(heightBar,rightIndex+1,heightBar.length-1);
-            for (int i=rightIndex+1;i<secondRightIndex;i++){
-                rightVolume += heightBar[secondRightIndex] - heightBar[i];
+        while (rightIndex>maxIndex){
+            if(heightBar[rightIndex]>rightRunningMax){
+                rightRunningMax = heightBar[rightIndex];
+            }else {
+                rightVolume += rightRunningMax - heightBar[rightIndex];
             }
 
-            rightIndex = secondRightIndex;
+            rightIndex--;
         }
 
         return (leftVolume + rightVolume);
     }
 
     /**
-     * find the smallest index with the max value in an array of integer between index start and end
+     * find the index of largest value in an array of integer.
+     * In case there are more than 1 largest values, return the smallest index.
      * @param input input array
-     * @param start start index, 0 is the first element
-     * @param end end index
-     * @return
+     * @return the index of largest value
      */
-    static int smallestIndexMax(int[] input, int start, int end){
-        if(start<0) start = 0;
-        if(end>input.length-1) end = input.length -1;
-
-        //initialize
-        int index = start;
-        for(int i=start;i<=end;i++){
+    static int indexOfLargestValue(int[] input){
+        int index = 0;
+        for(int i=0;i<=input.length-1;i++){
             if(input[i]>input[index]) index = i;
         }
 
         return index;
     }
 
-    /**
-     * find the largest index with the max value in an array of integer between index start and end
-     * @param input input array
-     * @param start start index, 0 is the first element
-     * @param end end index
-     * @return
-     */
-    static int largestIndexMax(int[] input, int start, int end){
-        if(start<0) start = 0;
-        if(end>input.length-1) end = input.length -1;
-
-        //initialize
-        int index = start;
-
-        for(int i=start;i<=end;i++){
-            if(input[i]>=input[index]) index = i;
-        }
-
-        return index;
-    }
 }
